@@ -19,6 +19,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w,"Hello")
 	})
+	
 	http.HandleFunc("/ask", func(w http.ResponseWriter, r *http.Request) {
 		
 		// Continuosly read and write message
