@@ -22,8 +22,6 @@ func main() {
 	
 	http.HandleFunc("/ask", func(w http.ResponseWriter, r *http.Request) {
 		
-		// Continuosly read and write message
-		//for {
 			body, err := ioutil.ReadAll(r.Body)
 			if err != nil {
 				fmt.Printf("could not read body: %s\n", err)
@@ -50,19 +48,10 @@ func main() {
 			}, func(resp *gpt3.CompletionResponse) {
 				message1 := string(resp.Choices[0].Text)
 				message = message + message1
-				/*err = conn.WriteMessage(mt, message)
-				if err != nil {
-					log.Println("write failed:", err)
-					return
-				}*/
 			})
 			io.WriteString(w, message)
-			/*err = conn.WriteMessage(mt, []byte(string("END")))
-			if err != nil {
-				log.Println("write failed:", err)
-				return
-			}*/
-		//}
+			fmt.Println(message)
+			
 	})
 
 	fmt.Println("Server has started")
