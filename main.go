@@ -55,17 +55,20 @@ func main() {
 				{Role: "user", Content: questionActual},
 			},
 		}
+
 		// Convert Go struct to JSON byte array
 		jsonData, err := json.Marshal(payload)
 		if err != nil {
-			log.Fatalf("Failed to marshal JSON: %s", err)
+			// log.Fatalf("Failed to marshal JSON: %s", err)
+			fmt.Println("Failed to marshal JSON: %s", err)
 			io.WriteString(w, "Some error on server side, please try again later")
 		}
 
 		// Create a new POST request with the JSON data as the body
 		req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 		if err != nil {
-			log.Fatalf("Failed to create request: %s", err)
+			// log.Fatalf("Failed to create request: %s", err)
+			fmt.Println("Failed to create request: %s", err)
 			io.WriteString(w, "Some error on server side, please try again later")
 		}
 
@@ -76,14 +79,16 @@ func main() {
 		// Send the request
 		resp, err := client.Do(req)
 		if err != nil {
-			log.Fatalf("Failed to make a request: %s", err)
+			// log.Fatalf("Failed to make a request: %s", err)
+			fmt.Println("Failed to make a request: %s", err)
 			io.WriteString(w, "Some error on server side, please try again later")
 		}
 		defer resp.Body.Close()
 
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatalf("Failed to read response body: %s", err)
+			// log.Fatalf("Failed to read response body: %s", err)
+			fmt.Println("Failed to read response body: %s", err)
 			io.WriteString(w, "Some error on server side, please try again later")
 		}
 		data := string(body)
