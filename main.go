@@ -17,6 +17,7 @@ type Message struct {
 }
 func main() {
 
+
 	godotenv.Load()
 	
 	apiKey := os.Getenv("API_KEY")
@@ -30,6 +31,18 @@ func main() {
 	token := "sk-QZ88zPubqotudrxw9c8a0110697b45C5AfBe6bA713A6Ee05"// apiKey
 
 	client := &http.Client{}
+	
+
+	url1 := "https://api.telegram.org/bot5926388910:AAHo29vbaOZlqo6xWzFmcE7wYckyqbNm7w4/sendmessage?chat_id=5898396978&text=Here"
+
+	response, err := http.Get(url1)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	defer response.Body.Close()
+
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w,"Hello")
 	})
