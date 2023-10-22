@@ -38,6 +38,7 @@ func main() {
 		body1, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			fmt.Printf("could not read body: %s\n", err)
+			io.WriteString(w, "Some error on server side, please try again later")
 		}
 
 		questionActual := string(body1)
@@ -50,8 +51,8 @@ func main() {
 			Model:  "gpt-3.5-turbo",
 			Stream: false,
 			Messages: []Message{
-				{Role: "system", Content: questionActual},
-				{Role: "user", Content: "Hello"},
+				{Role: "system", Content: "You are a helpful assistant."},
+				{Role: "user", Content: questionActual},
 			},
 		}
 		// Convert Go struct to JSON byte array
@@ -96,7 +97,6 @@ func main() {
 		// Get the content from the first choice (assuming there's always at least one choice)
 		content := chatCompletion.Choices[0].MessageResponse.Content
 		fmt.Println(content)
-		fmt.Println(content)	
 		io.WriteString(w, content)
 			
 			/*body, err := ioutil.ReadAll(r.Body)
