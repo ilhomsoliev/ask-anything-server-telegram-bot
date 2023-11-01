@@ -22,10 +22,14 @@ func main() {
 	
 	apiKey := os.Getenv("API_KEY")
 
-	url := "https://api.aiguoguo199.com/v1/chat/completions" 
+	url :=  os.Getenv("URL_KEY")
 	
 	if apiKey == "" {
 		 log.Fatalln("Api Key is missing")
+	}
+	
+	if url == "" {
+		log.Fatalln("URL Key is missing")
 	}
 
 	token := apiKey
@@ -46,6 +50,8 @@ func main() {
 		}
 
 		questionActual := string(body1)
+		
+		fmt.Println("Question asked: " + questionActual)
 
 		payload := struct {
 			Model    string    `json:"model"`
@@ -108,37 +114,6 @@ func main() {
 		fmt.Println(content)
 	
 		io.WriteString(w, content)
-			
-			/*body, err := ioutil.ReadAll(r.Body)
-			if err != nil {
-				fmt.Printf("could not read body: %s\n", err)
-			}
-
-			questionActual := string(body)
-			// ->
-			apiKey := os.Getenv("API_KEY")
-			if apiKey == "" {
-				log.Fatalln("Api Key is missing")
-			}
-			ctx := context.Background()
-			client := gpt3.NewClient(apiKey)
-			question := &Question{}
-			question.Question = questionActual
-			fmt.Println(questionActual)
-			var message = ""
-			client.CompletionStreamWithEngine(ctx, gpt3.TextDavinci003Engine, gpt3.CompletionRequest{
-				Prompt: []string{
-					question.Question,
-				},
-				MaxTokens:   gpt3.IntPtr(3000),
-				Temperature: gpt3.Float32Ptr(0),
-			}, func(resp *gpt3.CompletionResponse) {
-				message1 := string(resp.Choices[0].Text)
-				message = message + message1
-			})
-			io.WriteString(w, message)
-			fmt.Println(message)*/
-			
 	})
 
 	fmt.Println("Server has started")
